@@ -1,0 +1,14 @@
+フロントエンドプロジェクトの初期構築を行う際の動作手順：
+- `read` を使用して、@rules/tech-stack.md と @rules/frontend/ 配下のルールを確認する。
+- `create-next-app` でNext.jsプロジェクトを作成する（App Router, TypeScript, Tailwind CSS, ESLint）。
+- @rules/tech-stack.md に記載のフロントエンド関連パッケージをインストールする（shadcn/ui の初期化を含む）。
+- @rules/frontend/architecture.md に準拠したディレクトリ構造を作成する。
+- design-review で確定したデザイントークンを反映する：
+    - `designs/*.pen` を `read` で確認し、Phase 2 で設定したトークン値を把握する。
+    - `globals.css` の CSS 変数（`--background`, `--foreground`, `--primary`, `--secondary`, `--muted`, `--accent`, `--destructive`, `--radius` 等）にトークン値を設定する。
+    - `tailwind.config.ts` にカスタムスペーシング・シャドウ等の設定があれば反映する。
+    - `designs/custom-styles.md` が存在する場合、カスタムフォントやアニメーション等の設定も反映する。
+- `designs/assets/` にカスタム素材がある場合、`public/` にコピーする。
+- `.env.example` を作成し、必要な環境変数のテンプレートを用意する。
+- `shell` で `npm run build` を実行し、初期状態でビルドが通ることを確認する。
+- ユーザーに初期構築の完了を報告し、`npm run dev` での起動手順を案内する。
