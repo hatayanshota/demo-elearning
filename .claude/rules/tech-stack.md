@@ -10,6 +10,7 @@
 - フォーム・バリデーション: React Hook Form + Zod
 - ORM: Prisma
 - テスト: Vitest + React Testing Library + MSW
+- 動作確認: Playwright（フェーズ完了時のブラウザ動作確認に使用）
 
 ## ローカル開発環境
 - DB: PostgreSQL (Docker コンテナ)

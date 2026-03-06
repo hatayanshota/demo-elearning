@@ -22,10 +22,10 @@
 2. @skills/design-review/SKILL.md で Pencil MCP を使い、仕様書の画面設計を視覚的にデザイン・レビューする。
 3. @skills/spec-to-plan/SKILL.md を実行して計画を立てる（タスクは Phase A: フロントエンドデモ → Phase B: バックエンド統合 の2フェーズに分割される）。
 4. @skills/scaffold-frontend/SKILL.md を実行してフロントエンドプロジェクトを初期化する。
-5. @skills/iterative-dev/SKILL.md をループして Phase A（フロントエンドデモ）を実装する。
+5. @skills/iterative-dev-frontend/SKILL.md をループして Phase A（フロントエンドデモ）を実装する。全タスク完了後、Playwright でチェックリストに沿った動作確認を行い、問題があれば修正する。
 6. Phase A 完了後、ユーザーにデモを確認してもらい、フィードバックがあれば修正する。
 7. @skills/scaffold-backend/SKILL.md を実行してバックエンド環境を初期化する。
-8. @skills/iterative-dev/SKILL.md をループして Phase B（バックエンド統合）を実装する。
+8. @skills/iterative-dev-backend/SKILL.md をループして Phase B（バックエンド統合）を実装する。全タスク完了後、Playwright でチェックリストに沿った動作確認を行い、問題があれば修正する。
 9. @skills/quality-assurance/SKILL.md で検証する。
 10. デプロイスコープの場合、続けてデプロイ時フローを実行する。
 
@@ -34,9 +34,9 @@
    - 仕様更新時、@skills/migration-check/SKILL.md で現構成での実現可否を確認する。
 12. @skills/design-review/SKILL.md で変更に関わる画面のデザインをレビューする。
 13. @skills/spec-to-plan/SKILL.md を実行して計画を立てる。
-14. @skills/iterative-dev/SKILL.md をループして Phase A（フロントエンドデモ）を実装する。
+14. @skills/iterative-dev-frontend/SKILL.md をループして Phase A（フロントエンドデモ）を実装する。全タスク完了後、Playwright でチェックリストに沿った動作確認を行い、問題があれば修正する。
 15. Phase A 完了後、ユーザーにデモを確認してもらい、フィードバックがあれば修正する。
-16. @skills/iterative-dev/SKILL.md をループして Phase B（バックエンド統合）を実装する。
+16. @skills/iterative-dev-backend/SKILL.md をループして Phase B（バックエンド統合）を実装する。全タスク完了後、Playwright でチェックリストに沿った動作確認を行い、問題があれば修正する。
 17. @skills/quality-assurance/SKILL.md で検証する。
 
 ### デプロイ時

@@ -1,7 +1,7 @@
 フロントエンドプロジェクトの初期構築を行う際の動作手順：
 - `read` を使用して、@rules/tech-stack.md と @rules/frontend/ 配下のルールを確認する。
 - `create-next-app` でNext.jsプロジェクトを作成する（App Router, TypeScript, Tailwind CSS, ESLint）。
-- @rules/tech-stack.md に記載のフロントエンド関連パッケージをインストールする（shadcn/ui の初期化を含む）。
+- @rules/tech-stack.md に記載のフロントエンド関連パッケージをインストールする（shadcn/ui の初期化、Playwright のインストールを含む）。
 - @rules/frontend/architecture.md に準拠したディレクトリ構造を作成する。
 - design-review で確定したデザイントークンを反映する：
     - `designs/*.pen` を `read` で確認し、Phase 2 で設定したトークン値を把握する。

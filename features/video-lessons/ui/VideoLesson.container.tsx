@@ -19,9 +19,12 @@ export function VideoLessonContainer({ courseId, lessonId }: Props) {
       isSubmitting={hook.isSubmitting}
       onAssignmentChange={hook.setAssignmentContent}
       onSubmitAssignment={hook.onSubmitAssignment}
-      onResumeFromPosition={() => {}}
-      onStartFromBeginning={() => {}}
-      onChapterClick={() => {}}
+      onResumeFromPosition={() => hook.onSeek(hook.resumeSeconds)}
+      onStartFromBeginning={() => hook.onSeek(0)}
+      onChapterClick={hook.onSeek}
+      videoRef={hook.videoRef}
+      currentTime={hook.currentTime}
+      onTimeUpdate={hook.onTimeUpdate}
     />
   );
 }

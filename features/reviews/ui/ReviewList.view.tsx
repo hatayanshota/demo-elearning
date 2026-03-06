@@ -66,8 +66,8 @@ export function ReviewListView({ reviews, tab, isLoading, onTabChange, onReviewC
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <p className="font-semibold">{r.studentName}</p>
-                    <Badge variant={r.status === "PENDING" ? "destructive" : "secondary"} className="text-xs">
-                      {r.status === "PENDING" ? "未提出" : "レビュー済"}
+                    <Badge className={`text-xs ${r.status === "PENDING" ? "bg-indigo-500 text-white" : "bg-gray-100 text-gray-600"}`}>
+                      {r.status === "PENDING" ? "NEW" : "レビュー済"}
                     </Badge>
                   </div>
                   <p className="text-sm text-muted-foreground truncate">課題: {r.lessonTitle}</p>

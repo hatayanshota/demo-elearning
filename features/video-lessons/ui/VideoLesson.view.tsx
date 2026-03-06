@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Play, Star } from "lucide-react";
-import { useState } from "react";
+import { type RefObject } from "react";
 import type { LessonWithProgress, Assignment, Review } from "@/lib/types/api";
 
 type VideoLessonViewProps = {
@@ -23,23 +22,34 @@ type VideoLessonViewProps = {
   onResumeFromPosition: () => void;
   onStartFromBeginning: () => void;
   onChapterClick: (seconds: number) => void;
+  videoRef?: RefObject<HTMLVideoElement | null>;
+  currentTime?: number;
+  onTimeUpdate?: () => void;
 };
 
 function formatTime(seconds: number) {
   const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
+  const s = Math.floor(seconds % 60);
   return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+function getActiveChapterIndex(chapters: { startSeconds: number }[], currentTime: number): number {
+  for (let i = chapters.length - 1; i >= 0; i--) {
+    if (currentTime >= chapters[i].startSeconds) return i;
+  }
+  return 0;
 }
 
 export function VideoLessonView(props: VideoLessonViewProps) {
   const { lesson, assignment, isLoading, showResume, resumeSeconds, assignmentContent, isSubmitting,
-    onAssignmentChange, onSubmitAssignment, onResumeFromPosition, onStartFromBeginning, onChapterClick } = props;
-
-  const [isResumeOpen, setIsResumeOpen] = useState(showResume);
+    onAssignmentChange, onSubmitAssignment, onResumeFromPosition, onStartFromBeginning, onChapterClick,
+    videoRef, currentTime = 0, onTimeUpdate } = props;
 
   if (isLoading || !lesson) {
     return <div className="grid grid-cols-3 gap-6"><Skeleton className="col-span-2 h-96" /><Skeleton className="h-96" /></div>;
   }
+
+  const activeChapterIndex = getActiveChapterIndex(lesson.chapters, currentTime);
 
   return (
     <div className="space-y-6">
@@ -53,18 +63,31 @@ export function VideoLessonView(props: VideoLessonViewProps) {
 
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-2 space-y-4">
-          <div className="flex aspect-video items-center justify-center rounded-lg bg-slate-900 text-white">
-            <div className="text-center">
-              <Play className="mx-auto h-16 w-16 opacity-50" />
-              <p className="mt-2 text-sm opacity-50">動画プレイヤー</p>
-              <p className="text-xs opacity-30">{formatTime(lesson.durationSeconds ?? 0)}</p>
+          {lesson.videoUrl ? (
+            <video
+              ref={videoRef}
+              className="aspect-video w-full rounded-lg bg-slate-900"
+              controls
+              preload="metadata"
+              onTimeUpdate={onTimeUpdate}
+            >
+              <source src={lesson.videoUrl} type="video/mp4" />
+            </video>
+          ) : (
+            <div className="flex aspect-video items-center justify-center rounded-lg bg-slate-900 text-white">
+              <div className="text-center">
+                <Play className="mx-auto h-16 w-16 opacity-50" />
+                <p className="mt-2 text-sm opacity-50">動画プレイヤー</p>
+                <p className="text-xs opacity-30">{formatTime(lesson.durationSeconds ?? 0)}</p>
+              </div>
             </div>
-          </div>
+          )}
 
           {showResume && (
             <div className="flex items-center gap-3 rounded-lg border border-indigo-200 bg-indigo-50 p-3">
               <span className="text-sm">📌 {formatTime(resumeSeconds)}から再開しますか？</span>
-              <Button size="sm" onClick={onResumeFromPosition}>再開</Button>
+              <Button size="sm" className="bg-indigo-500 hover:bg-indigo-600 text-white" onClick={onResumeFromPosition}>再開</Button>
+              <Button size="sm" variant="ghost" className="text-xs text-muted-foreground" onClick={onStartFromBeginning}>最初から</Button>
             </div>
           )}
 
@@ -117,43 +140,35 @@ export function VideoLessonView(props: VideoLessonViewProps) {
 
         <div className="space-y-4">
           <Card>
-            <CardHeader className="pb-2"><CardTitle className="text-base">チャプター</CardTitle></CardHeader>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">チャプター</CardTitle>
+              {currentTime > 0 && (
+                <p className="text-xs text-muted-foreground">{formatTime(currentTime)}</p>
+              )}
+            </CardHeader>
             <CardContent>
               <div className="space-y-1">
-                {lesson.chapters.map((ch, i) => (
-                  <div
-                    key={ch.id}
-                    className={`flex items-center gap-3 rounded-md px-3 py-2 cursor-pointer transition-colors hover:bg-muted/50 ${i === 0 ? "border-l-3 border-l-indigo-500 bg-indigo-50" : ""}`}
-                    onClick={() => onChapterClick(ch.startSeconds)}
-                  >
-                    <span className="text-xs font-medium text-muted-foreground">{formatTime(ch.startSeconds)}</span>
-                    <span className="text-sm">{ch.title}</span>
-                  </div>
-                ))}
+                {lesson.chapters.map((ch, i) => {
+                  const isActive = i === activeChapterIndex;
+                  return (
+                    <div
+                      key={ch.id}
+                      className={`flex items-center gap-3 rounded-md px-3 py-2 cursor-pointer transition-colors hover:bg-muted/50 ${isActive ? "border-l-3 border-l-indigo-500 bg-indigo-50 font-medium" : ""}`}
+                      onClick={() => onChapterClick(ch.startSeconds)}
+                    >
+                      <span className={`text-xs font-medium ${isActive ? "text-indigo-600" : "text-muted-foreground"}`}>
+                        {formatTime(ch.startSeconds)}
+                      </span>
+                      <span className={`text-sm ${isActive ? "text-indigo-900" : ""}`}>{ch.title}</span>
+                    </div>
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
 
-      <Dialog open={isResumeOpen} onOpenChange={setIsResumeOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>視聴を再開しますか？</DialogTitle>
-          </DialogHeader>
-          <p className="text-sm text-muted-foreground">
-            前回 {formatTime(resumeSeconds)} まで視聴しました。続きから再生しますか？
-          </p>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => { setIsResumeOpen(false); onStartFromBeginning(); }}>
-              最初から
-            </Button>
-            <Button onClick={() => { setIsResumeOpen(false); onResumeFromPosition(); }}>
-              続きから
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

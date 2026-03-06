@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRoleStore } from "@/lib/stores/role-store";
 import { getLessonDetail, updateLessonProgress, completeLessonProgress, createAssignment } from "../api/lesson.api";
 import { toast } from "sonner";
@@ -9,6 +9,21 @@ export function useVideoLesson(courseId: string, lessonId: string) {
   const user = useRoleStore((s) => s.user);
   const [assignmentContent, setAssignmentContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  const handleTimeUpdate = useCallback(() => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+    }
+  }, []);
+
+  const handleSeek = useCallback((seconds: number) => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = seconds;
+      videoRef.current.play();
+    }
+  }, []);
 
   const query = useQuery({
     queryKey: ["lesson", lessonId, user.id],
@@ -51,5 +66,6 @@ export function useVideoLesson(courseId: string, lessonId: string) {
     onComplete: handleComplete,
     onSubmitAssignment: handleSubmitAssignment,
     courseId,
+    videoRef, currentTime, onTimeUpdate: handleTimeUpdate, onSeek: handleSeek,
   };
 }

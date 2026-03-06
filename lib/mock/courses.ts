@@ -6,6 +6,11 @@ export const mockCourses: Course[] = [
     description: "SEO、SNS、広告運用まで、Webマーケティングの全領域を体系的に学ぶ実践型コースです。",
     thumbnailUrl: null, sortOrder: 0, createdAt: "2024-06-01T00:00:00Z",
   },
+  {
+    id: "course-2", title: "SNS広告実践マスター講座",
+    description: "Instagram・X・TikTokの広告運用を実践的に学び、ROIを最大化する手法を習得します。",
+    thumbnailUrl: null, sortOrder: 1, createdAt: "2024-09-01T00:00:00Z",
+  },
 ];
 
 export const mockSections: Section[] = [
@@ -17,21 +22,21 @@ export const mockSections: Section[] = [
 
 export const mockLessons: Lesson[] = [
   // Section 1: マーケティング基礎
-  { id: "lesson-1", sectionId: "section-1", title: "マーケティングとは？基本概念と歴史", videoUrl: null, durationSeconds: 720, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-2", sectionId: "section-1", title: "ターゲット設定とペルソナ作成", videoUrl: null, durationSeconds: 900, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-3", sectionId: "section-1", title: "カスタマージャーニーの設計", videoUrl: null, durationSeconds: 1080, sortOrder: 2, hasAssignment: true, assignmentDescription: "自社サービスを想定したペルソナを1つ作成し、そのペルソナのカスタマージャーニーマップを記述してください。" },
+  { id: "lesson-1", sectionId: "section-1", title: "マーケティングとは？基本概念と歴史", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 720, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-2", sectionId: "section-1", title: "ターゲット設定とペルソナ作成", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 900, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-3", sectionId: "section-1", title: "カスタマージャーニーの設計", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 1080, sortOrder: 2, hasAssignment: true, assignmentDescription: "自社サービスを想定したペルソナを1つ作成し、そのペルソナのカスタマージャーニーマップを記述してください。" },
   // Section 2: SNSマーケティング
-  { id: "lesson-4", sectionId: "section-2", title: "SNSマーケティング戦略の基本", videoUrl: null, durationSeconds: 840, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-5", sectionId: "section-2", title: "Instagram・X運用の実践テクニック", videoUrl: null, durationSeconds: 1200, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-6", sectionId: "section-2", title: "SNS広告の種類と活用法", videoUrl: null, durationSeconds: 960, sortOrder: 2, hasAssignment: true, assignmentDescription: "Instagram広告のキャンペーンプランを作成してください。ターゲット、クリエイティブ方針、KPIを含めること。" },
+  { id: "lesson-4", sectionId: "section-2", title: "SNSマーケティング戦略の基本", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 840, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-5", sectionId: "section-2", title: "Instagram・X運用の実践テクニック", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 1200, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-6", sectionId: "section-2", title: "SNS広告の種類と活用法", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 960, sortOrder: 2, hasAssignment: true, assignmentDescription: "Instagram広告のキャンペーンプランを作成してください。ターゲット、クリエイティブ方針、KPIを含めること。" },
   // Section 3: SEO・コンテンツマーケティング
-  { id: "lesson-7", sectionId: "section-3", title: "SEOの基礎と検索エンジンの仕組み", videoUrl: null, durationSeconds: 780, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-8", sectionId: "section-3", title: "キーワード調査と競合分析", videoUrl: null, durationSeconds: 1500, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-9", sectionId: "section-3", title: "コンテンツ制作と内部SEO対策", videoUrl: null, durationSeconds: 1320, sortOrder: 2, hasAssignment: true, assignmentDescription: "指定キーワードに対するSEO記事の構成案（見出しH2〜H3、想定文字数、狙う検索意図）を作成してください。" },
+  { id: "lesson-7", sectionId: "section-3", title: "SEOの基礎と検索エンジンの仕組み", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 780, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-8", sectionId: "section-3", title: "キーワード調査と競合分析", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 1500, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-9", sectionId: "section-3", title: "コンテンツ制作と内部SEO対策", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 1320, sortOrder: 2, hasAssignment: true, assignmentDescription: "指定キーワードに対するSEO記事の構成案（見出しH2〜H3、想定文字数、狙う検索意図）を作成してください。" },
   // Section 4: 広告運用・分析
-  { id: "lesson-10", sectionId: "section-4", title: "Google広告の基本と設定方法", videoUrl: null, durationSeconds: 1080, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-11", sectionId: "section-4", title: "GA4によるアクセス解析入門", videoUrl: null, durationSeconds: 1440, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
-  { id: "lesson-12", sectionId: "section-4", title: "ROI分析とマーケティング戦略の改善", videoUrl: null, durationSeconds: 1680, sortOrder: 2, hasAssignment: true, assignmentDescription: "サンプルデータを元に、広告施策のROIを算出し、次月の改善提案をレポート形式でまとめてください。" },
+  { id: "lesson-10", sectionId: "section-4", title: "Google広告の基本と設定方法", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 1080, sortOrder: 0, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-11", sectionId: "section-4", title: "GA4によるアクセス解析入門", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 1440, sortOrder: 1, hasAssignment: false, assignmentDescription: null },
+  { id: "lesson-12", sectionId: "section-4", title: "ROI分析とマーケティング戦略の改善", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", durationSeconds: 1680, sortOrder: 2, hasAssignment: true, assignmentDescription: "サンプルデータを元に、広告施策のROIを算出し、次月の改善提案をレポート形式でまとめてください。" },
 ];
 
 export const mockChapters: Chapter[] = [
