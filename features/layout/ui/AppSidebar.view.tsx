@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3, Users, BookOpen, Calendar, MessageSquare, GraduationCap,
-  LayoutDashboard, Search,
+  LayoutDashboard,
 } from "lucide-react";
 import type { Role } from "@/lib/types/api";
 import { cn } from "@/lib/utils";
@@ -14,14 +14,13 @@ type NavItem = { label: string; href: string; icon: React.ReactNode };
 const navByRole: Record<Role, NavItem[]> = {
   ADMIN: [
     { label: "ダッシュボード", href: "/admin/dashboard", icon: <BarChart3 className="h-5 w-5" /> },
-    { label: "生徒一覧", href: "/admin/students", icon: <Users className="h-5 w-5" /> },
+    { label: "会員一覧", href: "/admin/students", icon: <Users className="h-5 w-5" /> },
     { label: "コース一覧", href: "/admin/courses", icon: <BookOpen className="h-5 w-5" /> },
     { label: "セミナー一覧", href: "/admin/seminars", icon: <Calendar className="h-5 w-5" /> },
-    { label: "会員検索", href: "/admin/student-search", icon: <Search className="h-5 w-5" /> },
   ],
   TEACHER: [
     { label: "レビュー一覧", href: "/teacher/reviews", icon: <MessageSquare className="h-5 w-5" /> },
-    { label: "会員検索", href: "/teacher/students", icon: <Users className="h-5 w-5" /> },
+    { label: "会員一覧", href: "/teacher/students", icon: <Users className="h-5 w-5" /> },
     { label: "コース一覧", href: "/teacher/courses", icon: <BookOpen className="h-5 w-5" /> },
     { label: "セミナー一覧", href: "/teacher/seminars", icon: <Calendar className="h-5 w-5" /> },
   ],
