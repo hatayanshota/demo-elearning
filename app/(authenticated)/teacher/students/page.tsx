@@ -1,5 +1,10 @@
-import { TeacherStudentSearch } from "@/features/students/ui/teacher-students";
+import { Suspense } from "react";
+import { StudentList } from "@/features/students/ui/students";
 
 export default function TeacherStudentsPage() {
-  return <TeacherStudentSearch />;
+  return (
+    <Suspense>
+      <StudentList />
+    </Suspense>
+  );
 }
