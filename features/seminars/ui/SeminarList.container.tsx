@@ -9,6 +9,8 @@ export function SeminarListContainer() {
   return (
     <SeminarListView
       seminars={hook.seminars} tab={hook.tab} isLoading={hook.isLoading} role={hook.role}
+      isSalonMember={hook.isSalonMember}
+      attendeesBySeminar={hook.attendeesBySeminar}
       onTabChange={hook.setTab} onRegister={hook.onRegister} onCancel={hook.onCancel}
     />
   );

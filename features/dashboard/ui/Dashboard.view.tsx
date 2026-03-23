@@ -33,12 +33,12 @@ export function DashboardView({ summary, charts, isLoading, onHighRiskClick }: D
   if (isLoading || !summary || !charts) {
     return (
       <div className="space-y-6">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <Skeleton key={i} className="h-24 rounded-xl" />
           ))}
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
             <Skeleton key={i} className="h-72 rounded-lg" />
           ))}
@@ -62,51 +62,13 @@ export function DashboardView({ summary, charts, isLoading, onHighRiskClick }: D
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">KPI ダッシュボード</h1>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpiCards.map((card) => (
           <KpiCardView key={card.label} {...card} />
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <ChartCard title="年齢分布チャート">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={charts.ageDistribution}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" fontSize={12} />
-              <YAxis fontSize={12} />
-              <ReTooltip />
-              <Bar dataKey="value" fill="#6366F1" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
-        <ChartCard title="性別デモグラフィクス">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie data={charts.genderDistribution} dataKey="value" nameKey="label" cx="50%" cy="50%" outerRadius={80} label>
-                {charts.genderDistribution.map((_, i) => (
-                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
-                ))}
-              </Pie>
-              <ReTooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
-        <ChartCard title="コホート分析">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={charts.occupationDistribution} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" fontSize={12} />
-              <YAxis dataKey="label" type="category" fontSize={12} width={80} />
-              <ReTooltip />
-              <Bar dataKey="value" fill="#0EA5E9" radius={[0, 4, 4, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ChartCard title="アクティブ状況">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={charts.activeTrend}>
@@ -119,7 +81,19 @@ export function DashboardView({ summary, charts, isLoading, onHighRiskClick }: D
           </ResponsiveContainer>
         </ChartCard>
 
-        <Card className="col-span-2 grid grid-cols-2 gap-0 overflow-hidden">
+        <ChartCard title="地域分布（都道府県）">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={charts.regionDistribution}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="label" fontSize={12} />
+              <YAxis fontSize={12} />
+              <ReTooltip />
+              <Bar dataKey="value" fill="#10B981" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+
+        <Card className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden">
           <div className="p-5">
             <p className="text-sm font-semibold text-muted-foreground">セミナー参加</p>
             <div className="mt-4 h-48">
@@ -155,18 +129,6 @@ export function DashboardView({ summary, charts, isLoading, onHighRiskClick }: D
           </div>
         </Card>
 
-        <ChartCard title="アクティブユーザー分析">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={charts.regionDistribution}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" fontSize={12} />
-              <YAxis fontSize={12} />
-              <ReTooltip />
-              <Bar dataKey="value" fill="#10B981" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
         <ChartCard title="課題停滞箇所">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={charts.assignmentBottleneck}>
@@ -176,6 +138,44 @@ export function DashboardView({ summary, charts, isLoading, onHighRiskClick }: D
               <ReTooltip />
               <Bar dataKey="value" fill="#EF4444" radius={[4, 4, 0, 0]} />
             </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+
+        <ChartCard title="コホート分析">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={charts.occupationDistribution} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" fontSize={12} />
+              <YAxis dataKey="label" type="category" fontSize={12} width={80} />
+              <ReTooltip />
+              <Bar dataKey="value" fill="#0EA5E9" radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+
+        <ChartCard title="年齢分布チャート">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={charts.ageDistribution}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="label" fontSize={12} />
+              <YAxis fontSize={12} />
+              <ReTooltip />
+              <Bar dataKey="value" fill="#6366F1" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+
+        <ChartCard title="性別デモグラフィクス">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie data={charts.genderDistribution} dataKey="value" nameKey="label" cx="50%" cy="50%" outerRadius={80} label>
+                {charts.genderDistribution.map((_, i) => (
+                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                ))}
+              </Pie>
+              <ReTooltip />
+              <Legend />
+            </PieChart>
           </ResponsiveContainer>
         </ChartCard>
       </div>

@@ -79,7 +79,7 @@ export function StudentListView(props: StudentListViewProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">生徒一覧</h1>
         <div className="flex gap-2">
           {riskFilters.map((f) => (
@@ -118,7 +118,7 @@ export function StudentListView(props: StudentListViewProps) {
           {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
         </div>
       ) : (
-        <div className="rounded-md border bg-white">
+        <div className="rounded-md border bg-white overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -128,6 +128,7 @@ export function StudentListView(props: StudentListViewProps) {
                 <SortableHeader label="進捗率" column="progressRate" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
                 <SortableHeader label="チャーンリスク" column="churnRiskScore" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
                 <SortableHeader label="最終ログイン" column="lastLoginAt" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+                <TableHead>サロン</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -137,7 +138,12 @@ export function StudentListView(props: StudentListViewProps) {
                   className={`cursor-pointer border-l-3 transition-colors duration-150 hover:bg-muted/50 ${riskRowBorder[s.profile.churnRiskLevel]} ${s.profile.churnRiskLevel === "HIGH" ? "bg-red-50/50" : s.profile.churnRiskLevel === "MEDIUM" ? "bg-amber-50/30" : ""}`}
                   onClick={() => onStudentClick(s.id)}
                 >
-                  <TableCell className="font-medium">{s.name}</TableCell>
+                  <TableCell>
+                    <div className="font-medium">{s.name}</div>
+                    {s.profile.chatworkName && (
+                      <div className="text-xs text-muted-foreground">{s.profile.chatworkName}</div>
+                    )}
+                  </TableCell>
                   <TableCell className="text-muted-foreground">{s.email}</TableCell>
                   <TableCell>{formatDate(s.profile.enrolledAt)}</TableCell>
                   <TableCell>
@@ -152,6 +158,13 @@ export function StudentListView(props: StudentListViewProps) {
                     </Badge>
                   </TableCell>
                   <TableCell>{formatDate(s.profile.lastLoginAt)}</TableCell>
+                  <TableCell>
+                    {s.profile.isSalonMember ? (
+                      <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">サロン</Badge>
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

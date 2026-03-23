@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoleStore } from "@/lib/stores/role-store";
 import { getCourses } from "@/features/courses/api/course.api";
-import { mockActivityLogs, mockLessons, mockLessonProgresses } from "@/lib/mock";
+import { mockActivityLogs, mockLessons, mockLessonProgresses, mockAnnouncements, mockSeminars, mockSeminarRegistrations } from "@/lib/mock";
 
 export function useStudentDashboard() {
   const user = useRoleStore((s) => s.user);
@@ -24,15 +24,27 @@ export function useStudentDashboard() {
   const nextLesson = sortedLessons.find(l => !completedLessonIds.has(l.id));
 
   const recentLogs = mockActivityLogs
-    .filter(l => l.userId === user.id)
+    .filter(l => l.userId === user.id && l.type !== "LOGIN")
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 5);
+
+  const upcomingSeminars = mockSeminars
+    .filter((s) => s.date > "2026-03-05")
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .slice(0, 2);
+
+  const seminarCount = mockSeminarRegistrations.filter(r => r.userId === user.id).length;
+  const eventCount = 0;
 
   return {
     courses: coursesQuery.data ?? [],
     daysSinceEnrollment,
     nextLesson,
     recentLogs,
+    announcements: mockAnnouncements,
+    upcomingSeminars,
+    seminarCount,
+    eventCount,
     isLoading: coursesQuery.isLoading,
   };
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3, Users, BookOpen, Calendar, MessageSquare, GraduationCap,
-  LayoutDashboard,
+  LayoutDashboard, Search,
 } from "lucide-react";
 import type { Role } from "@/lib/types/api";
 import { cn } from "@/lib/utils";
@@ -17,9 +17,11 @@ const navByRole: Record<Role, NavItem[]> = {
     { label: "生徒一覧", href: "/admin/students", icon: <Users className="h-5 w-5" /> },
     { label: "コース一覧", href: "/admin/courses", icon: <BookOpen className="h-5 w-5" /> },
     { label: "セミナー一覧", href: "/admin/seminars", icon: <Calendar className="h-5 w-5" /> },
+    { label: "会員検索", href: "/admin/student-search", icon: <Search className="h-5 w-5" /> },
   ],
   TEACHER: [
     { label: "レビュー一覧", href: "/teacher/reviews", icon: <MessageSquare className="h-5 w-5" /> },
+    { label: "会員検索", href: "/teacher/students", icon: <Users className="h-5 w-5" /> },
     { label: "コース一覧", href: "/teacher/courses", icon: <BookOpen className="h-5 w-5" /> },
     { label: "セミナー一覧", href: "/teacher/seminars", icon: <Calendar className="h-5 w-5" /> },
   ],
@@ -32,9 +34,10 @@ const navByRole: Record<Role, NavItem[]> = {
 
 type AppSidebarViewProps = {
   role: Role;
+  onNavClick?: () => void;
 };
 
-export function AppSidebarView({ role }: AppSidebarViewProps) {
+export function AppSidebarView({ role, onNavClick }: AppSidebarViewProps) {
   const pathname = usePathname();
   const items = navByRole[role];
 
@@ -52,6 +55,7 @@ export function AppSidebarView({ role }: AppSidebarViewProps) {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => onNavClick?.()}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 isActive

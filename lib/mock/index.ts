@@ -5,3 +5,4 @@ export { mockAssignments, mockReviews } from "./assignments";
 export { mockSeminars, mockSeminarRegistrations } from "./seminars";
 export { mockActivityLogs } from "./activity-logs";
 export { getKpiSummary, getKpiCharts } from "./kpi";
+export { mockAnnouncements } from "./announcements";

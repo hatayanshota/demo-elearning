@@ -35,6 +35,13 @@ export async function getReviewDetail(assignmentId: string): Promise<AssignmentW
   };
 }
 
+export async function getReviewStats(): Promise<{ total: number; reviewed: number; pending: number }> {
+  const total = mockAssignments.length;
+  const reviewed = mockAssignments.filter(a => a.status === "REVIEWED").length;
+  const pending = mockAssignments.filter(a => a.status === "PENDING").length;
+  return { total, reviewed, pending };
+}
+
 export async function createReview(
   assignmentId: string, reviewerId: string, feedback: string, rating: number | null
 ): Promise<Review> {

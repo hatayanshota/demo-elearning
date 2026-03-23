@@ -55,7 +55,17 @@ function LessonRow({ lesson, courseId, onLessonClick }: {
         <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/30" />
       )}
       <span className="text-sm font-medium">{lesson.title}</span>
-      {lesson.hasAssignment && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">課題</span>}
+      {lesson.hasAssignment && (
+        lesson.assignment?.status === "PENDING" ? (
+          <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">採点中</span>
+        ) : lesson.assignment?.status === "REVIEWED" ? (
+          <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">完了</span>
+        ) : isCompleted && !lesson.assignment ? (
+          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">課題未提出</span>
+        ) : (
+          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">課題</span>
+        )
+      )}
       <span className="ml-auto text-xs text-muted-foreground">{formatDuration(lesson.durationSeconds)}</span>
     </div>
   );
@@ -69,7 +79,7 @@ export function CurriculumView({ course, sections, isLoading, onLessonClick }: C
   return (
     <div className="space-y-6">
       <Card className="overflow-hidden border-0 bg-gradient-to-r from-indigo-500 to-blue-500 text-white">
-        <CardContent className="p-6">
+        <CardContent className="p-4 md:p-6">
           <h1 className="text-xl font-bold">{course.title}</h1>
           {course.description && <p className="mt-1 text-sm text-white/70">{course.description}</p>}
           <div className="mt-4 flex items-center gap-3">

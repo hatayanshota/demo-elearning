@@ -41,24 +41,24 @@ export const mockLessons: Lesson[] = [
 
 export const mockChapters: Chapter[] = [
   // Lesson 1
-  { id: "ch-1", lessonId: "lesson-1", title: "マーケティングの定義", startSeconds: 0, sortOrder: 0 },
-  { id: "ch-2", lessonId: "lesson-1", title: "マーケティングの歴史", startSeconds: 180, sortOrder: 1 },
-  { id: "ch-3", lessonId: "lesson-1", title: "現代マーケティングの4P/4C", startSeconds: 420, sortOrder: 2 },
+  { id: "ch-1", lessonId: "lesson-1", title: "マーケティングの定義", startSeconds: 0, sortOrder: 0, summary: "マーケティングの定義と歴史的変遷。フィリップ・コトラーの理論を中心に解説。" },
+  { id: "ch-2", lessonId: "lesson-1", title: "マーケティングの歴史", startSeconds: 180, sortOrder: 1, summary: "産業革命から現代まで、マーケティング概念がどのように進化してきたかを概観。" },
+  { id: "ch-3", lessonId: "lesson-1", title: "現代マーケティングの4P/4C", startSeconds: 420, sortOrder: 2, summary: "4P（Product, Price, Place, Promotion）と4C（Customer, Cost, Convenience, Communication）の違いと使い分け。" },
   // Lesson 2
-  { id: "ch-4", lessonId: "lesson-2", title: "STP分析の手法", startSeconds: 0, sortOrder: 0 },
-  { id: "ch-5", lessonId: "lesson-2", title: "ペルソナの作り方", startSeconds: 300, sortOrder: 1 },
+  { id: "ch-4", lessonId: "lesson-2", title: "STP分析の手法", startSeconds: 0, sortOrder: 0, summary: "顧客セグメンテーションの基本的な手法と活用事例を紹介。" },
+  { id: "ch-5", lessonId: "lesson-2", title: "ペルソナの作り方", startSeconds: 300, sortOrder: 1, summary: "具体的なペルソナシートの作成手順とヒアリングのコツ。" },
   { id: "ch-6", lessonId: "lesson-2", title: "事例紹介", startSeconds: 600, sortOrder: 2 },
   // Lesson 3
-  { id: "ch-7", lessonId: "lesson-3", title: "カスタマージャーニーとは", startSeconds: 0, sortOrder: 0 },
-  { id: "ch-8", lessonId: "lesson-3", title: "マップ作成のステップ", startSeconds: 300, sortOrder: 1 },
+  { id: "ch-7", lessonId: "lesson-3", title: "カスタマージャーニーとは", startSeconds: 0, sortOrder: 0, summary: "顧客体験を時系列で可視化するフレームワークの基本概念。" },
+  { id: "ch-8", lessonId: "lesson-3", title: "マップ作成のステップ", startSeconds: 300, sortOrder: 1, summary: "認知・興味・比較・購入・継続の5段階でマップを作成する方法。" },
   { id: "ch-9", lessonId: "lesson-3", title: "タッチポイントの設計", startSeconds: 600, sortOrder: 2 },
   { id: "ch-10", lessonId: "lesson-3", title: "実践ワーク解説", startSeconds: 840, sortOrder: 3 },
   // Lesson 4
-  { id: "ch-11", lessonId: "lesson-4", title: "SNSマーケティングの全体像", startSeconds: 0, sortOrder: 0 },
-  { id: "ch-12", lessonId: "lesson-4", title: "プラットフォーム選定", startSeconds: 280, sortOrder: 1 },
+  { id: "ch-11", lessonId: "lesson-4", title: "SNSマーケティングの全体像", startSeconds: 0, sortOrder: 0, summary: "主要SNSプラットフォームの特徴と、マーケティング活用の全体像を把握。" },
+  { id: "ch-12", lessonId: "lesson-4", title: "プラットフォーム選定", startSeconds: 280, sortOrder: 1, summary: "ターゲット層・商材に応じた最適なSNSの選び方。" },
   { id: "ch-13", lessonId: "lesson-4", title: "KPI設計", startSeconds: 560, sortOrder: 2 },
   // Lesson 5
-  { id: "ch-14", lessonId: "lesson-5", title: "Instagramアルゴリズム解説", startSeconds: 0, sortOrder: 0 },
+  { id: "ch-14", lessonId: "lesson-5", title: "Instagramアルゴリズム解説", startSeconds: 0, sortOrder: 0, summary: "Instagramのフィード・リール・ストーリーズのアルゴリズムの仕組みを解説。" },
   { id: "ch-15", lessonId: "lesson-5", title: "投稿テクニック", startSeconds: 360, sortOrder: 1 },
   { id: "ch-16", lessonId: "lesson-5", title: "Xの活用法", startSeconds: 720, sortOrder: 2 },
   { id: "ch-17", lessonId: "lesson-5", title: "分析ツールの使い方", startSeconds: 960, sortOrder: 3 },

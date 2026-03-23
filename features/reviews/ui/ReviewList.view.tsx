@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import type { AssignmentWithDetails } from "@/lib/types/api";
@@ -12,6 +13,8 @@ type ReviewListViewProps = {
   reviews: AssignmentWithDetails[];
   tab: "pending" | "reviewed";
   isLoading: boolean;
+  reviewedCount: number;
+  totalCount: number;
   onTabChange: (tab: "pending" | "reviewed") => void;
   onReviewClick: (id: string) => void;
 };
@@ -26,7 +29,9 @@ const riskBorderColor: Record<string, string> = {
   LOW: "border-l-green-400",
 };
 
-export function ReviewListView({ reviews, tab, isLoading, onTabChange, onReviewClick }: ReviewListViewProps) {
+export function ReviewListView({ reviews, tab, isLoading, reviewedCount, totalCount, onTabChange, onReviewClick }: ReviewListViewProps) {
+  const completionRate = totalCount > 0 ? Math.round((reviewedCount / totalCount) * 100) : 0;
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
@@ -34,6 +39,13 @@ export function ReviewListView({ reviews, tab, isLoading, onTabChange, onReviewC
         {tab === "pending" && reviews.length > 0 && (
           <Badge variant="destructive" className="rounded-full">{reviews.length}件 未レビュー</Badge>
         )}
+      </div>
+
+      <div className="flex items-center gap-3">
+        <Progress value={completionRate} className="h-2 flex-1 max-w-xs" />
+        <span className="text-sm text-muted-foreground">
+          {completionRate}% 完了（残り{totalCount - reviewedCount}件）
+        </span>
       </div>
 
       <Tabs value={tab} onValueChange={(v) => onTabChange(v as "pending" | "reviewed")}>
