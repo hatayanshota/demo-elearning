@@ -1,22 +1,28 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useStudents } from "../hooks/useStudents";
 import { StudentListView } from "./StudentList.view";
-import type { ChurnRiskLevel } from "@/lib/types/api";
+import { useRoleStore } from "@/lib/stores/role-store";
 
 export function StudentListContainer() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const initialRisk = searchParams.get("risk") as ChurnRiskLevel | null;
+  const { role } = useRoleStore();
 
-  const hook = useStudents(initialRisk ?? undefined);
+  const hook = useStudents();
+
+  const handleStudentClick = (id: string) => {
+    if (role === "ADMIN") {
+      router.push(`/admin/students/${id}`);
+    }
+  };
 
   return (
     <StudentListView
       {...hook}
+      role={role}
       onPageChange={hook.setPage}
-      onStudentClick={(id) => router.push(`/admin/students/${id}`)}
+      onStudentClick={handleStudentClick}
     />
   );
 }

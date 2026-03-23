@@ -9,7 +9,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { ArrowUpDown, ChevronLeft, ChevronRight, Search } from "lucide-react";
-import type { StudentWithProfile, ChurnRiskLevel } from "@/lib/types/api";
+import type { StudentWithProfile, ChurnRiskLevel, Role } from "@/lib/types/api";
 
 const riskBadgeVariant: Record<ChurnRiskLevel, "default" | "secondary" | "destructive"> = {
   LOW: "secondary",
@@ -41,6 +41,7 @@ type StudentListViewProps = {
   total: number;
   sortBy: string | undefined;
   sortOrder: "asc" | "desc";
+  role: Role;
   onSearch: (value: string) => void;
   onRiskFilter: (level: ChurnRiskLevel | undefined) => void;
   onSort: (column: string) => void;
@@ -67,8 +68,10 @@ function formatDate(iso: string | null) {
 }
 
 export function StudentListView(props: StudentListViewProps) {
-  const { students, isLoading, search, riskLevel, page, totalPages, total, sortBy, sortOrder,
+  const { students, isLoading, search, riskLevel, page, totalPages, total, sortBy, sortOrder, role,
     onSearch, onRiskFilter, onSort, onPageChange, onStudentClick } = props;
+
+  const isAdmin = role === "ADMIN";
 
   const riskFilters: { key: ChurnRiskLevel | undefined; label: string }[] = [
     { key: undefined, label: "全て" },
@@ -80,38 +83,36 @@ export function StudentListView(props: StudentListViewProps) {
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold">生徒一覧</h1>
-        <div className="flex gap-2">
-          {riskFilters.map((f) => (
-            <Button
-              key={f.key ?? "all"}
-              variant={riskLevel === f.key ? "default" : "outline"}
-              size="sm"
-              className={riskLevel === f.key ? riskFilterColors[f.key ?? "all"] : ""}
-              onClick={() => onRiskFilter(f.key)}
-            >
-              {f.label}
-            </Button>
-          ))}
-        </div>
+        <h1 className="text-2xl font-bold">会員一覧</h1>
+        {isAdmin && (
+          <div className="flex gap-2">
+            {riskFilters.map((f) => (
+              <Button
+                key={f.key ?? "all"}
+                variant={riskLevel === f.key ? "default" : "outline"}
+                size="sm"
+                className={riskLevel === f.key ? riskFilterColors[f.key ?? "all"] : ""}
+                onClick={() => onRiskFilter(f.key)}
+              >
+                {f.label}
+              </Button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="relative max-w-xs flex-1">
+        <div className="relative max-w-sm flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="生徒名で検索..."
+            placeholder="名前・メールで検索..."
             value={search}
             onChange={(e) => onSearch(e.target.value)}
             className="pl-9"
           />
         </div>
-        <span className="ml-auto text-sm text-muted-foreground">ステータス ▾</span>
+        <span className="ml-auto text-sm text-muted-foreground">{total}件</span>
       </div>
-
-      <p className="text-xs text-muted-foreground">
-        今月の入会者を重点確認スコアが61以上のデインジケーターを表示
-      </p>
 
       {isLoading ? (
         <div className="space-y-2">
@@ -124,49 +125,65 @@ export function StudentListView(props: StudentListViewProps) {
               <TableRow>
                 <SortableHeader label="名前" column="name" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
                 <TableHead>メール</TableHead>
-                <SortableHeader label="入会日" column="enrolledAt" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
-                <SortableHeader label="進捗率" column="progressRate" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
-                <SortableHeader label="チャーンリスク" column="churnRiskScore" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
-                <SortableHeader label="最終ログイン" column="lastLoginAt" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+                {isAdmin && (
+                  <>
+                    <SortableHeader label="入会日" column="enrolledAt" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+                    <SortableHeader label="進捗率" column="progressRate" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+                    <SortableHeader label="チャーンリスク" column="churnRiskScore" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+                    <SortableHeader label="最終ログイン" column="lastLoginAt" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+                  </>
+                )}
                 <TableHead>サロン</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {students.map((s) => (
-                <TableRow
-                  key={s.id}
-                  className={`cursor-pointer border-l-3 transition-colors duration-150 hover:bg-muted/50 ${riskRowBorder[s.profile.churnRiskLevel]} ${s.profile.churnRiskLevel === "HIGH" ? "bg-red-50/50" : s.profile.churnRiskLevel === "MEDIUM" ? "bg-amber-50/30" : ""}`}
-                  onClick={() => onStudentClick(s.id)}
-                >
-                  <TableCell>
-                    <div className="font-medium">{s.name}</div>
-                    {s.profile.chatworkName && (
-                      <div className="text-xs text-muted-foreground">{s.profile.chatworkName}</div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{s.email}</TableCell>
-                  <TableCell>{formatDate(s.profile.enrolledAt)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Progress value={s.progressRate} className="h-2 w-20" />
-                      <span className="text-sm">{s.progressRate}%</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={riskBadgeVariant[s.profile.churnRiskLevel]}>
-                      {riskLabel[s.profile.churnRiskLevel]}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{formatDate(s.profile.lastLoginAt)}</TableCell>
-                  <TableCell>
-                    {s.profile.isSalonMember ? (
-                      <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">サロン</Badge>
-                    ) : (
-                      <span className="text-muted-foreground">—</span>
-                    )}
+              {students.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={isAdmin ? 7 : 3} className="h-24 text-center text-muted-foreground">
+                    該当する会員が見つかりません
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                students.map((s) => (
+                  <TableRow
+                    key={s.id}
+                    className={`cursor-pointer border-l-3 transition-colors duration-150 hover:bg-muted/50 ${isAdmin ? riskRowBorder[s.profile.churnRiskLevel] : ""} ${isAdmin && s.profile.churnRiskLevel === "HIGH" ? "bg-red-50/50" : isAdmin && s.profile.churnRiskLevel === "MEDIUM" ? "bg-amber-50/30" : ""}`}
+                    onClick={() => onStudentClick(s.id)}
+                  >
+                    <TableCell>
+                      <div className="font-medium">{s.name}</div>
+                      {s.profile.chatworkName && (
+                        <div className="text-xs text-muted-foreground">{s.profile.chatworkName}</div>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">{s.email}</TableCell>
+                    {isAdmin && (
+                      <>
+                        <TableCell>{formatDate(s.profile.enrolledAt)}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={s.progressRate} className="h-2 w-20" />
+                            <span className="text-sm">{s.progressRate}%</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={riskBadgeVariant[s.profile.churnRiskLevel]}>
+                            {riskLabel[s.profile.churnRiskLevel]}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{formatDate(s.profile.lastLoginAt)}</TableCell>
+                      </>
+                    )}
+                    <TableCell>
+                      {s.profile.isSalonMember ? (
+                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">サロン</Badge>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
