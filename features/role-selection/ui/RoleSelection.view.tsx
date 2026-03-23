@@ -67,7 +67,7 @@ export function RoleSelectionView({ onSelectRole }: RoleSelectionViewProps) {
         {roleCards.map((card) => (
           <Card
             key={card.role}
-            className="w-56 overflow-hidden border-0 shadow-xl transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(99,102,241,0.15)]"
+            className="overflow-hidden border-0 shadow-xl transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(99,102,241,0.15)]"
           >
             <CardContent className="flex flex-col items-center p-6 pt-8 text-center">
               <div className="mb-4 flex h-24 w-24 items-center justify-center overflow-hidden rounded-lg bg-slate-50">

@@ -1,5 +1,5 @@
 import type { CourseWithProgress, SectionWithLessons } from "@/lib/types/api";
-import { mockCourses, mockSections, mockLessons, mockChapters, mockLessonProgresses } from "@/lib/mock";
+import { mockCourses, mockSections, mockLessons, mockChapters, mockLessonProgresses, mockAssignments } from "@/lib/mock";
 
 export async function getCourseDetail(
   courseId: string, userId: string
@@ -23,9 +23,12 @@ export async function getCourseDetail(
         const chapters = mockChapters
           .filter(ch => ch.lessonId === lesson.id)
           .sort((a, b) => a.sortOrder - b.sortOrder);
+        const assignment = mockAssignments.find(
+          a => a.userId === userId && a.lessonId === lesson.id
+        ) ?? null;
         const isLocked = !allCompleted;
         if (!progress?.isCompleted) allCompleted = false;
-        return { ...lesson, progress, isLocked: isLocked && !progress, chapters };
+        return { ...lesson, progress, isLocked: isLocked && !progress, chapters, assignment };
       });
     return { ...section, lessons };
   });

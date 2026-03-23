@@ -64,8 +64,8 @@ export function StudentDetailView({ student, isLoading, onBack }: StudentDetailV
         <span className="font-medium text-foreground">{student.name}</span>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        <Card className="col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="col-span-1 md:col-span-2">
           <CardContent className="p-6">
             <div className="flex items-start gap-4">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 text-xl font-bold text-indigo-600">
@@ -79,6 +79,14 @@ export function StudentDetailView({ student, isLoading, onBack }: StudentDetailV
                   <span>{student.profile.occupation ?? "—"}</span>
                   <span>入会から{daysSince(student.profile.enrolledAt)}日目</span>
                 </div>
+                <div className="mt-2 flex flex-wrap gap-3 text-sm text-muted-foreground">
+                  {student.profile.lineName && <span>LINE: {student.profile.lineName}</span>}
+                  {student.profile.chatworkName && <span>CW: {student.profile.chatworkName}</span>}
+                  {student.profile.meetName && <span>Meet: {student.profile.meetName}</span>}
+                </div>
+                {student.profile.isSalonMember && (
+                  <Badge className="mt-2 bg-emerald-100 text-emerald-700">サロン会員</Badge>
+                )}
               </div>
             </div>
           </CardContent>
@@ -91,7 +99,7 @@ export function StudentDetailView({ student, isLoading, onBack }: StudentDetailV
         </Card>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="pb-2"><CardTitle className="text-sm">全レッスン進捗</CardTitle></CardHeader>
           <CardContent>

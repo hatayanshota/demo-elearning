@@ -109,6 +109,39 @@ export const mockStudentUser: User = studentUsers[0]; // 山田太郎
 
 export const mockUsers: User[] = [mockAdminUser, mockTeacherUser, teacherSuzuki, ...studentUsers];
 
+const lineNames: (string | null)[] = [
+  "太郎@マーケ",null,"ichiro_t","misaki_ito",null,
+  "yoko.nakamura","だいすけ",null,"shota_y","mayu_yamaguchi",
+  null,"sakura_i","yudai_k",null,"ren_saito",
+  "megumi_s",null,"mai_ikeda","sota_h",null,
+  "kaito_ishi","ryoko_m",null,"mizuki_goto","kazu_okada",
+  null,"tsubasa_m","ayaka_k",null,"saori_aoki",
+  "koki_s",null,"hayato_f","anna_ota",null,
+  "nanami_f","hiroto_o",null,"hayate_n","shiori_h",
+];
+
+const chatworkNames: (string | null)[] = [
+  "yamada_taro","sasaki_h",null,"ito_misaki","watanabe_k",
+  null,"kobayashi_d","kato_y","yoshida_s",null,
+  "matsumoto_t","inoue_s",null,"hayashi_y","saito_r",
+  "shimizu_m",null,"ikeda_m","hashimoto_s","abe_c",
+  null,"maeda_r","fujita_d",null,"okada_k",
+  "hasegawa_r",null,"kondo_a","endo_s","aoki_s",
+  null,"nishimura_a","fukuda_h",null,"miura_s",
+  "fujii_n",null,"kaneko_y","nakajima_h",null,
+];
+
+const meetNames: (string | null)[] = [
+  "t.yamada@meet",null,null,"m.ito@meet","k.watanabe@meet",
+  null,"d.kobayashi@meet",null,"s.yoshida@meet",null,
+  "t.matsumoto@meet","s.inoue@meet",null,null,"r.saito@meet",
+  null,"y.yamazaki@meet",null,null,"c.abe@meet",
+  "k.ishikawa@meet",null,"d.fujita@meet",null,null,
+  "r.hasegawa@meet",null,"a.kondo@meet",null,null,
+  "k.sakamoto@meet","a.nishimura@meet",null,"a.ota@meet",null,
+  null,"h.okamoto@meet",null,null,"s.harada@meet",
+];
+
 export const mockStudentProfiles: StudentProfile[] = studentNames.map((_, i) => ({
   id: `profile-${i + 1}`,
   userId: `user-${i + 4}`,
@@ -120,4 +153,8 @@ export const mockStudentProfiles: StudentProfile[] = studentNames.map((_, i) => 
   churnRiskScore: churnScores[i],
   churnRiskLevel: churnLevel(churnScores[i]),
   lastLoginAt: lastLogin(i),
+  lineName: lineNames[i],
+  chatworkName: chatworkNames[i],
+  meetName: meetNames[i],
+  isSalonMember: i % 3 === 0,
 }));

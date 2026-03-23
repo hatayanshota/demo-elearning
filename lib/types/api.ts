@@ -39,6 +39,10 @@ export type StudentProfile = {
   churnRiskScore: number;
   churnRiskLevel: ChurnRiskLevel;
   lastLoginAt: string | null;
+  lineName: string | null;
+  chatworkName: string | null;
+  meetName: string | null;
+  isSalonMember: boolean;
 };
 
 export type Course = {
@@ -74,6 +78,7 @@ export type Chapter = {
   title: string;
   startSeconds: number;
   sortOrder: number;
+  summary?: string;
 };
 
 export type LessonProgress = {
@@ -152,6 +157,7 @@ export type LessonWithProgress = Lesson & {
   progress: LessonProgress | null;
   isLocked: boolean;
   chapters: Chapter[];
+  assignment?: { status: "PENDING" | "REVIEWED" } | null;
 };
 
 export type AssignmentWithDetails = Assignment & {
@@ -223,6 +229,13 @@ export type SeminarTrendItem = {
 export type ActiveTrendItem = {
   week: string;
   count: number;
+};
+
+export type Announcement = {
+  id: string;
+  title: string;
+  date: string;
+  summary: string;
 };
 
 // ==================== Request / Response Types ====================

@@ -46,7 +46,7 @@ export function VideoLessonView(props: VideoLessonViewProps) {
     videoRef, currentTime = 0, onTimeUpdate } = props;
 
   if (isLoading || !lesson) {
-    return <div className="grid grid-cols-3 gap-6"><Skeleton className="col-span-2 h-96" /><Skeleton className="h-96" /></div>;
+    return <div className="grid grid-cols-1 md:grid-cols-3 gap-6"><Skeleton className="col-span-1 md:col-span-2 h-96" /><Skeleton className="h-96" /></div>;
   }
 
   const activeChapterIndex = getActiveChapterIndex(lesson.chapters, currentTime);
@@ -61,8 +61,8 @@ export function VideoLessonView(props: VideoLessonViewProps) {
         <span className="font-medium text-foreground">{lesson.title}</span>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2 space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="col-span-1 md:col-span-2 space-y-4">
           {lesson.videoUrl ? (
             <video
               ref={videoRef}
@@ -153,13 +153,18 @@ export function VideoLessonView(props: VideoLessonViewProps) {
                   return (
                     <div
                       key={ch.id}
-                      className={`flex items-center gap-3 rounded-md px-3 py-2 cursor-pointer transition-colors hover:bg-muted/50 ${isActive ? "border-l-3 border-l-indigo-500 bg-indigo-50 font-medium" : ""}`}
+                      className={`flex items-start gap-3 rounded-md px-3 py-2 cursor-pointer transition-colors hover:bg-muted/50 ${isActive ? "border-l-3 border-l-indigo-500 bg-indigo-50 font-medium" : ""}`}
                       onClick={() => onChapterClick(ch.startSeconds)}
                     >
-                      <span className={`text-xs font-medium ${isActive ? "text-indigo-600" : "text-muted-foreground"}`}>
+                      <span className={`text-xs font-medium shrink-0 ${isActive ? "text-indigo-600" : "text-muted-foreground"}`}>
                         {formatTime(ch.startSeconds)}
                       </span>
-                      <span className={`text-sm ${isActive ? "text-indigo-900" : ""}`}>{ch.title}</span>
+                      <div className="flex-1">
+                        <span className={`text-sm ${isActive ? "text-indigo-900" : ""}`}>{ch.title}</span>
+                        {ch.summary && (
+                          <p className="mt-0.5 text-xs text-muted-foreground line-clamp-2">{ch.summary}</p>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
